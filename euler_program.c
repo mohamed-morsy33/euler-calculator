@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "tinyexpr.h"
+#include <emscripten/emscripten.h>
 
 float f(double x, double y, const char *expr) {
     te_variable vars[] = {{"x", &x}, {"y", &y}};
@@ -16,27 +17,25 @@ float f(double x, double y, const char *expr) {
 }
 
 
-int main()
+EMSCRIPTEN_KEEPALIVE
+double run_euler(double x0, double y0, double delta_x, int n, const char *expr)
 {
-  double x0,y0,x,y,h;
-  int i,n;
-  char expr[200];
+  // printf("Enter the values x0,y0,delta_x,n: \n");
+  // scanf("%lf%lf%lf%d", &x0, &y0, &x, &n);
 
-  printf("Enter the values x0,y0,delta_x,n: \n");
-  scanf("%lf%lf%lf%d", &x0, &y0, &x, &n);
+  // printf("Enter f(x, y): ");
+  // scanf(" %99[^\n]", expr);
 
-  printf("Enter f(x, y): ");
-  scanf(" %99[^\n]", expr);
+  double x=x0;
+  double y=y0;
+  double h = (x-x0)/n;
 
-  h = (x-x0)/n;
-  x=x0;
-  y=y0;
-
-  for (i=1; i <=n; i++)
+  for (int i=1; i <=n; i++)
   {
     y += h*f(x,y, expr);
     x+=h;
   }
 
-  printf("Final y result: %f\n", y);
+  // printf("Final y result: %f\n", y);
+  return y;
 }
