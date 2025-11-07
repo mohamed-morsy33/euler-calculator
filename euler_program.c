@@ -18,7 +18,7 @@ float f(double x, double y, const char *expr) {
 
 
 EMSCRIPTEN_KEEPALIVE
-double run_euler(double x0, double y0, double delta_x, int n, const char *expr)
+double run_euler(double x0, double y0, double x_end, int n, const char *expr)
 {
   // printf("Enter the values x0,y0,delta_x,n: \n");
   // scanf("%lf%lf%lf%d", &x0, &y0, &x, &n);
@@ -28,12 +28,12 @@ double run_euler(double x0, double y0, double delta_x, int n, const char *expr)
 
   double x=x0;
   double y=y0;
-  double h = (x-x0)/n;
+  double delta = (x_end-x0)/n;
 
   for (int i=1; i <=n; i++)
   {
-    y += h*f(x,y, expr);
-    x+=h;
+    y += delta*f(x,y, expr);
+    x+=delta;
   }
 
   // printf("Final y result: %f\n", y);
