@@ -2,7 +2,6 @@
 #include "tinyexpr.h"
 #include <emscripten/emscripten.h>
 
-// Test comment for commit fix
 float f(double x, double y, const char *expr) {
     te_variable vars[] = {{"x", &x}, {"y", &y}};
     int err;
